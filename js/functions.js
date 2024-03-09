@@ -6,6 +6,8 @@
 */
 const checkLength = (string = '', maxLength = 1) => string.length <= maxLength;
 
+checkLength('Проверяемая строка', 20);
+
 /**
  * Проверяет, является ли строка палиндромом
  * @param {*} string - строка
@@ -14,11 +16,13 @@ const checkLength = (string = '', maxLength = 1) => string.length <= maxLength;
 const isPalindrome = (string = '') => {
   const normalizedString = string.replace(/\s/g, '').toUpperCase();
   let reverseString = '';
-  for (i = normalizedString.length - 1; i >= 0; i--) {
+  for (let i = normalizedString.length - 1; i >= 0; i--) {
     reverseString += normalizedString[i];
   }
   return reverseString === normalizedString;
-}
+};
+
+isPalindrome('Осело колесо');
 
 /**
  * Принимает строку, извлекает содержащиеся цифры
@@ -29,9 +33,11 @@ const getNumber = (input) => {
   let result = '';
   input = input.toString();
   for (let i = 0; i <= input.length - 1; i++) {
-    if (Number.isNaN(parseInt(input[i], 10)) == false) {
+    if (Number.isNaN(parseInt(input[i], 10)) === false) {
       result += input[i];
     }
   }
   return result === '' ? NaN : parseInt(result, 10);
-}
+};
+
+getNumber('Сейчас 2024 год');
