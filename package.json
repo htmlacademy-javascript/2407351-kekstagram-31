@@ -3,6 +3,7 @@
   "version": "30.0.0",
   "private": true,
   "description": "Личный проект «Кекстаграм» от HTML Academy",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git@github.com:htmlacademy-javascript/2407351-kekstagram-31.git"
@@ -21,7 +22,7 @@
     "lint": "eslint js/"
   },
   "engines": {
-    "node": "18",
+    "node": "20",
     "npm": "9"
   }
 }
