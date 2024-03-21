@@ -28,22 +28,19 @@
 
 // Имена авторов также должны быть случайными. Набор имён для комментаторов составьте сами. Подставляйте случайное имя в поле name.
 
-NUMBER_OF_PHOTOS = 25;
+const NUMBER_OF_PHOTOS = 25;
 
-MIN_PHOTO_ID = 1;
-MAX_PHOTO_ID = 25;
+const MIN_LIKES = 15;
+const MAX_LIKES = 200;
 
-MIN_LIKES = 15;
-MAX_LIKES = 200;
+const MIN_COMMENT_ID = 1;
+const MAX_COMMENT_ID = 1000;
 
-MIN_COMMENT_ID = 1;
-MAX_COMMENT_ID = 1000;
+const MAX_COMMENTS = 0;
+const MIN_COMMENTS = 30;
 
-MAX_COMMENTS = 0;
-MIN_COMMENTS = 30;
-
-MIN_AVATAR_ID = 1;
-MAX_AVATAR_ID = 6;
+const MIN_AVATAR_ID = 1;
+const MAX_AVATAR_ID = 6;
 
 const USER_NAMES = [
   'Григорий',
@@ -82,7 +79,7 @@ const getRandomUniqueInteger = (min, max) => {
   return function () {
     let currentValue = getRandomInteger(min, max);
     if (previousValues.length >= (max - min + 1)) {
-      console.error(`Перебраны все числа из диапазона от ${ min } до ${ max}`);
+      window.console.error(`Перебраны все числа из диапазона от ${min} до ${max}`);
       return null;
     }
     while (previousValues.includes(currentValue)) {
@@ -91,13 +88,13 @@ const getRandomUniqueInteger = (min, max) => {
     previousValues.push(currentValue);
     return currentValue;
   };
-}
+};
 
 const getCommentId = getRandomUniqueInteger(MIN_COMMENT_ID, MAX_COMMENT_ID);
 
 const createComment = () => ({
   id: getCommentId(),
-  avatar: `img/avatar-${ getRandomInteger(MIN_AVATAR_ID, MAX_AVATAR_ID) }.svg`,
+  avatar: `img/avatar-${getRandomInteger(MIN_AVATAR_ID, MAX_AVATAR_ID)}.svg`,
   message: COMMENT_MESSAGES[getRandomInteger(1, COMMENT_MESSAGES.length - 1)],
   name: USER_NAMES[getRandomInteger(1, USER_NAMES.length - 1)],
 });
@@ -108,13 +105,13 @@ const createPhoto = () => {
   return () => {
     const photo = {};
     photo.id = id++;
-    photo.url = `photos/${ photo.id }.jpg`;
-    photo.description = `Это фотография №${ photo.id }`,
+    photo.url = `photos/${photo.id}.jpg`;
+    photo.description = `Это фотография №${photo.id}`;
     photo.likes = getRandomInteger(MIN_LIKES, MAX_LIKES);
     photo.comments = Array.from({length: getRandomInteger(MIN_COMMENTS, MAX_COMMENTS)}, createComment);
     return photo;
-  }
+  };
 };
 
 const createdPhoto = Array.from({length: NUMBER_OF_PHOTOS}, createPhoto());
-console.log(createdPhoto);
+window.console.log(createdPhoto);
