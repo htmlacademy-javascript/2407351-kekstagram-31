@@ -23,4 +23,4 @@ const getRandomUniqueInteger = (min, max) => {
   };
 };
 
-export {getRandomInteger, getRandomUniqueInteger};
+export { getRandomInteger, getRandomUniqueInteger };
