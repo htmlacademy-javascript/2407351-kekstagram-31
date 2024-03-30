@@ -1,0 +1,1 @@
+import './photos/thumbnails.js';
