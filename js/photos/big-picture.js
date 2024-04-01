@@ -1,4 +1,4 @@
-import { createdPhotos } from '../mocks';
+import { createdPhotos } from '../mocks/index.js';
 
 const bigPicture = document.querySelector('.big-picture');
 
