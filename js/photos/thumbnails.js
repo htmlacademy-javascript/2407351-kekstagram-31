@@ -1,15 +1,16 @@
 import { createdPhotos } from '../mocks/index.js';
 import { findTemplate, renderPack } from '../utils/dom.js';
+import { openBigPicture } from './big-picture.js';
 
 const template = findTemplate('picture');
 
-const container = document.querySelector('.pictures');
+const picturesContainer = document.querySelector('.pictures');
 
 const createThumbnail = (photo) => {
   const thumbnail = template.cloneNode(true);
 
   thumbnail.href = photo.url;
-  thumbnail.dataset.id = photo.id;
+  thumbnail.dataset.pictureId = photo.id;
 
   const image = thumbnail.querySelector('.picture__img');
 
@@ -22,5 +23,13 @@ const createThumbnail = (photo) => {
   return thumbnail;
 };
 
-renderPack(createdPhotos, createThumbnail, container);
+renderPack(createdPhotos, createThumbnail, picturesContainer);
+
+picturesContainer.addEventListener('click', (evt) => {
+  const currentPicture = evt.target.closest('.picture');
+  if (currentPicture) {
+    evt.preventDefault();
+    openBigPicture(currentPicture.dataset.pictureId);
+  }
+});
 
