@@ -25,7 +25,7 @@ const renderNextComments = () => {
   const renderedComments = comments.slice(currentCount, currentCount + COUNT_STEP);
   const renderedCommentsLength = renderedComments.length + currentCount;
 
-  renderPack(renderedComments, createComment, socialComments)
+  renderPack(renderedComments, createComment, socialComments);
 
   commentsCount.querySelector('.social__comment-shown-count').textContent = renderedCommentsLength;
   commentsCount.querySelector('.social__comment-total-count').textContent = comments.length;
