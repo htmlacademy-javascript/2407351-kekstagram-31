@@ -1,24 +1,16 @@
-import { error, isHashtagsValid } from './hashtag-validity';
+import { form } from './element';
+import './big-picture.js';
+import './form-validity.js';
 
-const uploadForm = document.querySelector('.img-upload__form');
 const pageBody = document.querySelector('body');
+const filename = form.filename;
+const editingModal = form.querySelector('.img-upload__overlay');
+const photoEditorResetBtn = form.querySelector('#upload-cancel');
 
-const uploadFileInput = uploadForm.querySelector('#upload-file');
-const photoEditorForm = uploadForm.querySelector('.img-upload__overlay');
-const photoEditorResetBtn = uploadForm.querySelector('#upload-cancel');
+const hashtagInput = form.hashtags;
+const commentInput = form.description;
 
-const hashtagInput = uploadForm.querySelector('.text__hashtags');
-const commentInput = uploadForm.querySelector('.text__descripthion');
-
-const pristine = new Pristine(uploadForm, {
-  classTo: 'img-upload__field',
-  errorTextPattern: 'img-upload__field-wrapper',
-  errorTextClass: 'img-upload__field-wrapper--error',
-});
-
-const onPhotoEditorResetBtnClick = () => {
-  closePhotoEditor();
-};
+const closeModal = () => form.reset();
 
 const onEscapeKeydown = (evt) => {
   if (evt.key === 'Escape') {
@@ -26,46 +18,26 @@ const onEscapeKeydown = (evt) => {
     if (document.activeElement === hashtagInput || document.activeElement === commentInput) {
       evt.stopPropagation();
     } else {
-      uploadForm.reset();
-      closePhotoEditor();
+      form.reset();
+      closeModal();
     }
   }
 };
 
-function closePhotoEditor () {
-  photoEditorForm.classList.add('hidden');
-  pageBody.classList.remove('modal-open');
-  document.removeEventListener('keydown', onEscapeKeydown);
-  photoEditorResetBtn.removeEventListener('click', onPhotoEditorResetBtnClick);
-  uploadFileInput.value = '';
-}
-
-const onPhotoSelect = () => {
-  uploadFileInput.addEventListener('change', () => {
-    photoEditorForm.classList.remove('hidden');
-    pageBody.classList.add('modal-open');
-    photoEditorResetBtn.addEventListener('click', onPhotoEditorResetBtnClick);
-    document.addEventListener('keydown', onEscapeKeydown);
-  });
-};
-
-const onHashtagInput = () => {
-  isHashtagsValid(hashtagInput.value);
-};
-
-
-const onFormSubmit = (evt) => {
+filename.addEventListener('change', (evt) => {
   evt.preventDefault();
 
-  if (pristine.validate()) {
-    hashtagInput.value = hashtagInput.value.trin().raplaceAll(/\s+/g, ' ');
-    uploadForm.submit();
-  }
-};
+  editingModal.classList.remove('hidden');
+  pageBody.classList.add('modal-open');
+  photoEditorResetBtn.addEventListener('click', closeModal);
+  document.addEventListener('keydown', onEscapeKeydown);
+});
 
-pristine.addValidator(hashtagInput, isHashtagsValid, error, 2, false);
-uploadFileInput.addEventListener('change', onPhotoSelect);
-hashtagInput.addEventListener('input', onHashtagInput);
-uploadForm.addEventListener('submit', onFormSubmit);
-
+form.addEventListener('reset', () => {
+  editingModal.classList.add('hidden');
+  pageBody.classList.remove('modal-open');
+  document.removeEventListener('keydown', onEscapeKeydown);
+  photoEditorResetBtn.removeEventListener('click', closeModal);
+  filename.value = '';
+});
 
