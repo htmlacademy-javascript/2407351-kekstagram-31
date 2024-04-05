@@ -1,4 +1,4 @@
-import { renderPack } from '../utils/dom';
+import { renderPack } from '../utils/dom.js';
 
 const COUNT_STEP = 5;
 let currentCount = 0;

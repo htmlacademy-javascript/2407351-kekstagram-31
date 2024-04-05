@@ -1,6 +1,5 @@
-import { form } from './element';
-import './big-picture.js';
-import './form-validity.js';
+import { form } from './element.js';
+import { resetValidation, validate } from './form-validity.js';
 
 const pageBody = document.querySelector('body');
 const filename = form.filename;
@@ -38,6 +37,17 @@ form.addEventListener('reset', () => {
   pageBody.classList.remove('modal-open');
   document.removeEventListener('keydown', onEscapeKeydown);
   photoEditorResetBtn.removeEventListener('click', closeModal);
+  resetValidation();
   filename.value = '';
 });
 
+const onFormSubmit = (evt) => {
+  evt.preventDefault();
+
+  if (validate()) {
+    hashtagInput.value = hashtagInput.value.trim().replaceAll(/\s+/g, ' ');
+    form.submit();
+  }
+};
+
+form.addEventListener('submit', onFormSubmit);

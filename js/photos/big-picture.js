@@ -1,5 +1,5 @@
-import { createdPhotos } from '../mocks/index.js';
-import { clearComments, renderComments } from '../mocks/render-comments.js';
+import { createdPhotos } from './create-photos.js';
+import { clearComments, renderComments } from '../comments/render-comments.js';
 
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureImg = bigPicture.querySelector('.big-picture__img').querySelector('img');

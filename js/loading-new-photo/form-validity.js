@@ -1,5 +1,6 @@
-import Pristine from 'pristinejs';
-import { form } from './element';
+// import Pristine from 'pristinejs';
+import { form } from './element.js';
+import { isUniqueArray } from '../utils/unique-array.js';
 
 const MAX_HASHTAGS = 5;
 const MAX_SYMBOLS = 20;
@@ -12,26 +13,19 @@ const HASHTAG_REG_EXP = /^#[a-zа-яё0-9]{1,19}$/i;
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
-  errorTextPattern: 'img-upload__field-wrapper',
-
-  // classTo: 'img-upload__field',
-  // errorTextPattern: 'img-upload__field-wrapper',
-  // errorTextClass: 'img-upload__field-wrapper--error',
+  errorTextParent: 'img-upload__field-wrapper',
+  errorTextClass: 'img-upload__field-wrapper--error',
 });
 
 let errorMessage = '';
 
-const error = () => errorMessage;
-
 const isHashtagsValid = (value) => {
   errorMessage = '';
-  const inputText = value.toLowerCase().trim();
-
-  if (inputText.length === 0) {
+  if (!value.length) {
     return true;
   }
 
-  const inputArray = inputText.split(/\s+/);
+  const inputArray = value.trim().toLowerCase().split(/\s*(?=#)/);
 
   const rules = [
     {
@@ -44,15 +38,15 @@ const isHashtagsValid = (value) => {
     },
     {
       check: inputArray.some((item) => item.length > MAX_SYMBOLS),
-      error: `Максимальная длина одного хэштега ${MAX_SYMBOLS} символов, включая решётку`,
+      error: `Максимальное количество символов одного хэштега - ${MAX_SYMBOLS}, включая решётку`,
     },
     {
       check: inputArray.some((item) => item.slice(1).includes('#')),
       error: 'Хэштеги разделяются пробелами',
     },
     {
-      check: inputArray.some((item, num, array) => array.includes(item, num + 1)),
-      error: 'Хэштег не должны повторяться',
+      check: !isUniqueArray(inputArray),
+      error: 'Хэштеги не должны повторяться',
     },
     {
       check: inputArray.length > MAX_HASHTAGS,
@@ -73,8 +67,8 @@ const isHashtagsValid = (value) => {
   });
 };
 
-pristine.addValidator(form.hashtags, isHashtagsValid, error, 2, false);
-pristine.addValidator(form.description, (value) => value.length <= Description.MAX_LENGTH, `Максимальная длина комментария  ${Description.MAX_LENGTH}`);
+pristine.addValidator(form.hashtags, isHashtagsValid, () => errorMessage);
+pristine.addValidator(form.description, (value) => value.length <= Description.MAX_LENGTH, `Максимальная длина комментария - ${Description.MAX_LENGTH} символов`);
 
 const validate = () => pristine.validate();
 const resetValidation = () => pristine.reset();
