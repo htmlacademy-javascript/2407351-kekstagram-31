@@ -1,5 +1,5 @@
-import { getRandomInteger, getRandomUniqueInteger } from '../utils/random.js';
-import { NUMBER_OF_PHOTOS, USER_NAMES, COMMENT_MESSAGES } from './data.js';
+import { getRandomInteger, getRandomUniqueInteger } from '../utils/random-value.js';
+import { NUMBER_OF_PHOTOS, USER_NAMES, COMMENT_MESSAGES } from '../mocks/data.js';
 
 const LikesCount = {
   MIN: 15,

@@ -1,3 +1,5 @@
+import { renderPack } from '../utils/dom.js';
+
 const COUNT_STEP = 5;
 let currentCount = 0;
 let comments = [];
@@ -9,22 +11,22 @@ const commentsCount = bigPicture.querySelector('.social__comment-count');
 const commentsLoader = bigPicture.querySelector('.comments-loader');
 socialComments.innerHTML = '';
 
+const createComment = (comment) => {
+  const socialComment = socialCommentTemplate.cloneNode(true);
+
+  socialComment.querySelector('.social__picture').src = comment.avatar;
+  socialComment.querySelector('.social__picture').alt = comment.name;
+  socialComment.querySelector('.social__text').textContent = comment.message;
+
+  return socialComment;
+};
+
 const renderNextComments = () => {
-  const socialCommentFragment = document.createDocumentFragment();
   const renderedComments = comments.slice(currentCount, currentCount + COUNT_STEP);
   const renderedCommentsLength = renderedComments.length + currentCount;
 
-  renderedComments.forEach((comment) => {
-    const socialComment = socialCommentTemplate.cloneNode(true);
+  renderPack(renderedComments, createComment, socialComments);
 
-    socialComment.querySelector('.social__picture').src = comment.avatar;
-    socialComment.querySelector('.social__picture').alt = comment.name;
-    socialComment.querySelector('.social__text').textContent = comment.message;
-
-    socialCommentFragment.appendChild(socialComment);
-  });
-
-  socialComments.appendChild(socialCommentFragment);
   commentsCount.querySelector('.social__comment-shown-count').textContent = renderedCommentsLength;
   commentsCount.querySelector('.social__comment-total-count').textContent = comments.length;
 

@@ -1,4 +1,4 @@
-import { createdPhotos } from '../mocks/index.js';
+import { createdPhotos } from './create-photos.js';
 import { findTemplate, renderPack } from '../utils/dom.js';
 import { openBigPicture } from './big-picture.js';
 
