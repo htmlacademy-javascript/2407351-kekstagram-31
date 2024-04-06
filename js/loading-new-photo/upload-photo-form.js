@@ -1,9 +1,10 @@
-import { form } from './element.js';
+import { resetEffect } from './effect.js';
+import { form, editingModal } from './elements.js';
 import { resetValidation, validate } from './form-validity.js';
+import { resetScale } from './photo-editing.js';
 
 const pageBody = document.querySelector('body');
 const filename = form.filename;
-const editingModal = form.querySelector('.img-upload__overlay');
 const photoEditorResetBtn = form.querySelector('#upload-cancel');
 
 const hashtagInput = form.hashtags;
@@ -39,6 +40,8 @@ form.addEventListener('reset', () => {
   photoEditorResetBtn.removeEventListener('click', closeModal);
   resetValidation();
   filename.value = '';
+  resetScale();
+  resetEffect();
 });
 
 const onFormSubmit = (evt) => {
