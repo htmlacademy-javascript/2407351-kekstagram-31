@@ -1,5 +1,5 @@
-// import Pristine from 'pristinejs';
-import { form } from './element.js';
+import Pristine from 'pristinejs';
+import { form } from './elements.js';
 import { isUniqueArray } from '../utils/unique-array.js';
 
 const MAX_HASHTAGS = 5;
