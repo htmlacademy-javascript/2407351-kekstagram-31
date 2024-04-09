@@ -5,14 +5,19 @@ import './utils/api.js';
 import { renderThumbnails } from './photos/thumbnails.js';
 import { getPhotos } from './utils/api.js';
 import { showErrorMessage } from './utils/message-error.js';
-// import { createPhotos } from './photos/create-photos.js';
+import { openBigPicture } from './photos/big-picture.js';
+import { picturesContainer } from './loading-new-photo/elements.js';
 
-// debugger;
 getPhotos()
-  .then(data => {
-    let photos = data;
-    // console.log(JSON.parse(photos));
-    console.log(typeof(photos));
+  .then((photos) => {
     renderThumbnails(photos);
+    picturesContainer.addEventListener('click', (evt) => {
+      const currentPicture = evt.target.closest('.picture');
+      if (currentPicture) {
+        evt.preventDefault();
+        openBigPicture(photos, currentPicture.dataset.pictureId);
+      }
+    });
   })
   .catch(showErrorMessage);
+

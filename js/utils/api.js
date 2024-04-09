@@ -18,21 +18,10 @@ const ErrorText = {
 
 const load = async (route, method = Method.GET, body = null) => {
   const response = await fetch(`${BASE_URL}${route}`, { method, body });
-  return response.ok ? await response.json : Promise.reject({ message: ErrorText[method], status: response.status });
+  return response.ok ? await response.json() : Promise.reject({ message: ErrorText[method], status: response.status });
 };
 
-// fetch(`${BASE_URL}${Route.GET_DATA}`)
-//   .then((response) => response.json())
-//   .then((photos) => {
-//     console.log(photos)
-//   })
-//   .catch(() => {
-//     failFormSubmission()
-//   });
-
 const getPhotos = () => load(Route.GET_DATA);
-// const photos = getPhotos();
-// console.log(JSON.parse(photos));
 
 const sendPhotos
  = (body) => load(Route.SEND_DATA, Method.POST, body);
