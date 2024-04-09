@@ -3,6 +3,9 @@ import { form, editingModal } from './elements.js';
 import { resetValidation, validate } from './form-validity.js';
 import { resetScale } from './photo-editing.js';
 import { pageBody } from './elements.js';
+import { failFormSubmission, successfulFormSubmission } from './notification-module.js';
+import { blockSubmitButton, unblockSubmitButton } from './submit-state.js';
+import { sendPhotos } from '../utils/api.js';
 
 
 const filename = form.filename;
@@ -16,10 +19,9 @@ const closeModal = () => form.reset();
 const onEscapeKeydown = (evt) => {
   if (evt.key === 'Escape') {
     evt.preventDefault();
-    if (document.activeElement === hashtagInput || document.activeElement === commentInput) {
+    if (document.activeElement === hashtagInput || document.activeElement === commentInput || pageBody.contains(pageBody.querySelector('.error'))) {
       evt.stopPropagation();
     } else {
-      form.reset();
       closeModal();
     }
   }
@@ -45,13 +47,17 @@ form.addEventListener('reset', () => {
   resetEffect();
 });
 
-const onFormSubmit = (evt) => {
+form.addEventListener('submit', (evt) => {
   evt.preventDefault();
-
   if (validate()) {
     hashtagInput.value = hashtagInput.value.trim().replaceAll(/\s+/g, ' ');
-    form.submit();
+    blockSubmitButton();
+    sendPhotos(new FormData(evt.target))
+      .then(() => {
+        successfulFormSubmission();
+        closeModal();
+      })
+      .catch(failFormSubmission)
+      .finally(unblockSubmitButton);
   }
-};
-
-form.addEventListener('submit', onFormSubmit);
+});

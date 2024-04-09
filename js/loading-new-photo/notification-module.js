@@ -23,8 +23,7 @@ const createNotification = (template, captureEscape = false) => {
 
   function hundleDocumentKey(evt) {
     if (evt.key === 'Escape') {
-      evt.stopPropagation();
-      // evt.preventDefault();
+      evt.preventDefault();
       closeNotification();
     }
   }
@@ -41,4 +40,4 @@ const failFormSubmission = () => {
   createNotification(templateError, true);
 };
 
-export { successfulFormSubmission, failFormSubmission };
+export { templateError, successfulFormSubmission, failFormSubmission };

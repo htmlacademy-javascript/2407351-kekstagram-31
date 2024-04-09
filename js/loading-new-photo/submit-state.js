@@ -5,14 +5,14 @@ const SubmitButtonText = {
   SENDING: 'Сохраняю...',
 };
 
-const disabledButton = () => {
+const blockSubmitButton = () => {
   submitButton.disabled = true;
   submitButton.textContent = SubmitButtonText.SENDING;
 };
 
-const enableButton = () => {
+const unblockSubmitButton = () => {
   submitButton.disabled = false;
   submitButton.textContent = SubmitButtonText.IDLE;
 };
 
-export { disabledButton, enableButton };
+export { blockSubmitButton, unblockSubmitButton };

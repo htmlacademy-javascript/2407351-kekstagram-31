@@ -23,8 +23,7 @@ const load = async (route, method = Method.GET, body = null) => {
 
 const getPhotos = () => load(Route.GET_DATA);
 
-const sendPhotos
- = (body) => load(Route.SEND_DATA, Method.POST, body);
+const sendPhotos = (body) => load(Route.SEND_DATA, Method.POST, body);
 
 export { getPhotos, sendPhotos };
 
