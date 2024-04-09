@@ -1,10 +1,9 @@
-import { createdPhotos } from './create-photos.js';
+// import { createdPhotos } from './create-photos.js';
 import { findTemplate, renderPack } from '../utils/dom.js';
-import { openBigPicture } from './big-picture.js';
+// import { openBigPicture } from './big-picture.js';
+import { picturesContainer } from '../loading-new-photo/elements.js';
 
 const template = findTemplate('picture');
-
-const picturesContainer = document.querySelector('.pictures');
 
 const createThumbnail = (photo) => {
   const thumbnail = template.cloneNode(true);
@@ -23,7 +22,7 @@ const createThumbnail = (photo) => {
   return thumbnail;
 };
 
-renderPack(createdPhotos, createThumbnail, picturesContainer);
+const renderThumbnails = (photos) => renderPack(photos, createThumbnail, picturesContainer);
 
 picturesContainer.addEventListener('click', (evt) => {
   const currentPicture = evt.target.closest('.picture');
@@ -33,3 +32,4 @@ picturesContainer.addEventListener('click', (evt) => {
   }
 });
 
+export { renderThumbnails };

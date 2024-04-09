@@ -2,8 +2,9 @@ import { resetEffect } from './effect.js';
 import { form, editingModal } from './elements.js';
 import { resetValidation, validate } from './form-validity.js';
 import { resetScale } from './photo-editing.js';
+import { pageBody } from './elements.js';
 
-const pageBody = document.querySelector('body');
+
 const filename = form.filename;
 const photoEditorResetBtn = form.querySelector('#upload-cancel');
 
