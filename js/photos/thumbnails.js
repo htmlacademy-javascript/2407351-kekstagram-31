@@ -1,10 +1,7 @@
-import { createdPhotos } from './create-photos.js';
 import { findTemplate, renderPack } from '../utils/dom.js';
-import { openBigPicture } from './big-picture.js';
+import { picturesContainer } from '../loading-new-photo/elements.js';
 
 const template = findTemplate('picture');
-
-const picturesContainer = document.querySelector('.pictures');
 
 const createThumbnail = (photo) => {
   const thumbnail = template.cloneNode(true);
@@ -16,20 +13,12 @@ const createThumbnail = (photo) => {
 
   image.src = photo.url;
   image.alt = photo.description;
-
   thumbnail.querySelector('.picture__comments').textContent = photo.comments.length;
   thumbnail.querySelector('.picture__likes').textContent = photo.likes;
 
   return thumbnail;
 };
 
-renderPack(createdPhotos, createThumbnail, picturesContainer);
+const renderThumbnails = (photos) => renderPack(photos, createThumbnail, picturesContainer);
 
-picturesContainer.addEventListener('click', (evt) => {
-  const currentPicture = evt.target.closest('.picture');
-  if (currentPicture) {
-    evt.preventDefault();
-    openBigPicture(currentPicture.dataset.pictureId);
-  }
-});
-
+export { renderThumbnails };

@@ -24,6 +24,7 @@ const findTemplate = (id) => {
  * @param {HTMLElement} container
  */
 
+
 const renderPack = (items, makeElement, container) => {
   const fragment = document.createDocumentFragment();
   items.forEach((item) => fragment.appendChild(makeElement(item)));

@@ -1,4 +1,3 @@
-import { createdPhotos } from './create-photos.js';
 import { clearComments, renderComments } from '../comments/render-comments.js';
 
 const bigPicture = document.querySelector('.big-picture');
@@ -12,7 +11,7 @@ const onBigPictureCancelClick = (evt) => {
   closeBigPicture();
 };
 
-const onEscKeydown = (evt) => {
+const onDocumentEscKeydown = (evt) => {
   if (evt.key === 'Escape') {
     evt.preventDefault();
     closeBigPicture();
@@ -25,11 +24,11 @@ function closeBigPicture() {
   bigPicture.classList.add('hidden');
   bigPicturesCancel.removeEventListener('click', onBigPictureCancelClick);
   document.body.classList.remove('modal-open');
-  document.removeEventListener('keydown', onEscKeydown);
+  document.removeEventListener('keydown', onDocumentEscKeydown);
 }
 
-function openBigPicture(pictureId) {
-  const currentPhoto = createdPhotos.find((photo) => photo.id === Number(pictureId));
+function openBigPicture(photos, pictureId) {
+  const currentPhoto = photos.find((photo) => photo.id === Number(pictureId));
 
   bigPictureImg.src = currentPhoto.url;
   likesCount.textContent = currentPhoto.likes;
@@ -40,7 +39,7 @@ function openBigPicture(pictureId) {
   bigPicture.classList.remove('hidden');
   bigPicturesCancel.addEventListener('click', onBigPictureCancelClick);
   document.body.classList.add('modal-open');
-  document.addEventListener('keydown', onEscKeydown);
+  document.addEventListener('keydown', onDocumentEscKeydown);
 }
 
 export { openBigPicture };
