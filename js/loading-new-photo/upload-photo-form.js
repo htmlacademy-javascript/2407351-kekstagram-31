@@ -6,6 +6,7 @@ import { pageBody } from './elements.js';
 import { failFormSubmission, successfulFormSubmission } from './notification-module.js';
 import { blockSubmitButton, unblockSubmitButton } from './submit-state.js';
 import { sendPhotos } from '../utils/api.js';
+import { parsePhoto } from './load-new-photo.js';
 
 
 const filename = form.filename;
@@ -29,11 +30,13 @@ const onEscapeKeydown = (evt) => {
 
 filename.addEventListener('change', (evt) => {
   evt.preventDefault();
-
-  editingModal.classList.remove('hidden');
-  pageBody.classList.add('modal-open');
-  photoEditorResetBtn.addEventListener('click', closeModal);
-  document.addEventListener('keydown', onEscapeKeydown);
+  const isValid = parsePhoto(filename);
+  if (isValid) {
+    editingModal.classList.remove('hidden');
+    pageBody.classList.add('modal-open');
+    photoEditorResetBtn.addEventListener('click', closeModal);
+    document.addEventListener('keydown', onEscapeKeydown);
+  }
 });
 
 form.addEventListener('reset', () => {
