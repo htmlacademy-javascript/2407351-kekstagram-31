@@ -18,6 +18,7 @@ getPhotos()
         openBigPicture(photos, currentPicture.dataset.pictureId);
       }
     });
+    handleSelectFilters(photos);
   })
   .catch(showErrorMessage);
 

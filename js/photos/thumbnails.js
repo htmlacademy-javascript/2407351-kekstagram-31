@@ -21,4 +21,8 @@ const createThumbnail = (photo) => {
 
 const renderThumbnails = (photos) => renderPack(photos, createThumbnail, picturesContainer);
 
-export { renderThumbnails };
+const clearThumbnails = () => {
+  picturesContainer.forEach((item) => item.remove());
+};
+
+export { renderThumbnails, clearThumbnails };
