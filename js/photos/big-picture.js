@@ -1,4 +1,5 @@
 import { clearComments, renderComments } from '../comments/render-comments.js';
+import { getPhotoById } from '../loading-new-photo/photo-state.js';
 
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureImg = bigPicture.querySelector('.big-picture__img').querySelector('img');
@@ -27,8 +28,8 @@ function closeBigPicture() {
   document.removeEventListener('keydown', onDocumentEscKeydown);
 }
 
-function openBigPicture(photos, pictureId) {
-  const currentPhoto = photos.find((photo) => photo.id === Number(pictureId));
+function openBigPicture(pictureId) {
+  const currentPhoto = getPhotoById(pictureId);
 
   bigPictureImg.src = currentPhoto.url;
   likesCount.textContent = currentPhoto.likes;
