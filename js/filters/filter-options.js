@@ -10,9 +10,7 @@ const RandomFilterParams = {
   MAX: 10,
 };
 
-const filterRandom = (photos) => {
-  photos.toSorted(sortRandom).slice(RandomFilterParams.MIN, RandomFilterParams.MAX);
-};
+const filterRandom = (photos) => photos.toSorted(sortRandom).slice(RandomFilterParams.MIN, RandomFilterParams.MAX);
 
 const getCommentsAmount = (photo) => photo.comments.length;
 
@@ -23,14 +21,12 @@ const discussedSort = (photoA, photoB) => {
   return commentsB - commentsA;
 };
 
-const sortDiscussed = (photos) => {
-  photos.toSorted(discussedSort);
-};
+const sortDiscussed = (photos) => photos.toSorted(discussedSort);
 
 const idToFilter = {
   [Filters.RANDOM_FILTER]: filterRandom,
   [Filters.DISCUSSED_FILTER]: sortDiscussed,
 };
 
-export { Filters, idToFilter }
+export { Filters, idToFilter };
 

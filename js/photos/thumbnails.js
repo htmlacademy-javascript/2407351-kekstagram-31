@@ -1,5 +1,6 @@
 import { findTemplate, renderPack } from '../utils/dom.js';
 import { picturesContainer } from '../loading-new-photo/elements.js';
+import { openBigPicture } from './big-picture.js';
 
 const template = findTemplate('picture');
 
@@ -22,7 +23,15 @@ const createThumbnail = (photo) => {
 const renderThumbnails = (photos) => renderPack(photos, createThumbnail, picturesContainer);
 
 const clearThumbnails = () => {
-  picturesContainer.forEach((item) => item.remove());
+  picturesContainer.querySelectorAll('.picture').forEach((item) => item.remove());
 };
+
+picturesContainer.addEventListener('click', (evt) => {
+  const currentPicture = evt.target.closest('.picture');
+  if (currentPicture) {
+    evt.preventDefault();
+    openBigPicture(currentPicture.dataset.pictureId);
+  }
+});
 
 export { renderThumbnails, clearThumbnails };
